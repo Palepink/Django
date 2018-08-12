@@ -1,0 +1,38 @@
+{% extends 'common/background.html' %}
+{% load staticfiles %}
+{% block title %}article list{% endblock %}
+{% block body %}
+    <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}" >
+    <div style="margin-top: 30px;margin-left: 0px">
+        <a style="font-size: 20px">{{ article.title }}</a>
+        <a class="text-right author" href="#">作者: {{ user.username }}</a>
+    </div>
+    {% if article.article_tag.all %}
+    <span class="fa fa-tags" style=" font-size: 12px"><a style="margin-left: 5px;">{{ article.article_tag.all | join:"," }}</a></span>
+    {% else %}
+    {% endif %}
+    <div id="editormd-view" style="margin-top: 20px">
+        <textarea id="append-test" style="display: none" >{{ article.body }}</textarea>
+    </div>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'editor/lib/marked.min.js' %}"></script>
+    <script src="{% static 'editor/lib/prettify.min.js' %}"></script>
+    <script src="{% static 'editor/lib/raphael.min.js' %}"></script>
+    <script src="{% static 'editor/lib/underscore.min.js' %}"></script>
+    <script src="{% static 'editor/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static 'editor/lib/flowchart.min.js' %}"></script>
+    <script src="{% static 'editor/lib/jquery.flowchart.min.js' %}"></script>
+    <script src="{% static 'editor/editormd.js'%}"></script>
+    <script type="text/javascript">
+    $(function () {
+        editormd.markdownToHTML('editormd-view',{
+            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+        emoji           : true,
+        taskList        : true,
+        tex             : true,  // 默认不解析
+        flowChart       : true,  // 默认不解析
+        sequenceDiagram : true,  // 默认不解析
+        });
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script rel="stylesheet" src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script rel="stylesheet" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script rel="stylesheet" src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'fonts/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+<div class="font-apple">
+{% include 'common/header.html' %}
+{% block content %}{% endblock %}
+{% include 'common/footer.html' %}
+</div>
+</body>
+</html>

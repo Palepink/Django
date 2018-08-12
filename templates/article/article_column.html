@@ -1,0 +1,121 @@
+{% extends 'common/background.html' %}
+{% load staticfiles %}
+{% block title %}文章{% endblock %}
+{% block body %}
+<div style="margin-top: 20px">
+    <p class="text-right"><button id="add_column" onclick="add_column()"  class="btn btn-primary">添加栏目</button></p>
+    <table class="table table-hover text-center">
+        <tr>
+            <td>序号</td>
+            <td>栏目名称</td>
+            <td>创建时间</td>
+            <td>更新时间</td>
+            <td>操作</td>
+        </tr>
+        {% for column in columns %}
+        <tr>
+            <td width="10%">{{ forloop.counter }}</td>
+            <td width="20%">{{ column.column }}</td>
+            <td width="20%">{{ column.created |date:"F d,y"}}</td>
+            <td width="20%">{{ column.updated |date:"F d,y"}}</td>
+            <td width="10%">
+                <a name="edit" href="javascript:" onclick="edit_column(this,{{ column.id }})" style="color: black">
+                    <span class="fa fa-pencil"></span>
+                </a>
+                <a name="delete" href="javascript:" onclick="del_column(this,{{ column.id }})" style="color: black">
+                    <span class="fa fa-trash-o" style="margin-left: 20px"></span>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+    <div class="text-center" id="hidden1">{{ column_form.column }}</div>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'layui/layer.js' %}"></script>
+    <script>
+    function add_column() {
+        layer.open({
+            type:1,
+            skin:'layui-layer-demo',
+            title:'新增栏目',
+            area:['300px','210px'],
+            content:$('#hidden1'),
+            btn:['确定','取消'],
+            yes:function () {
+                column_name = $('#id_column').val();
+                $.ajax({
+                    url:'{% url "article:article_column" %}',
+                    type:'POST',
+                    data:{"column":column_name},
+                    success:function (e) {
+                        if(e=='1'){
+                            parent.location.reload();
+                            layer.msg('Ok');
+                        }else {
+                            layer.msg('error')
+                        }
+                    },
+                });
+            },
+            btn2:function (index, layero) {
+                layer.close(index);
+            }
+        });
+    }
+
+function edit_column(the,column_id) {
+        var name=$(the).parents("tr").children("td").eq(1).text();
+        var index=layer.open({
+            type:1,
+            area:['400px','200px'],
+            title:"编辑栏目",
+            content:'<div class="text-center" style="margin-top:2px"><p>请编辑栏目的名称</p>' +
+            '<p><input type="text" id="new_name" value="'+name+'"></p></div>',
+            btn:['确定','取消'],
+            yes:function (index,layro) {
+                new_name = $("#new_name").val();
+                $.ajax({
+                    url:"{% url 'article:column_rename' %}",
+                    type:"POST",
+                    data:{"column_id":column_id,"column_name":new_name},
+                    time:4000,
+                    success:function (e) {
+                        if (e=='1') {
+                            parent.location.reload();
+                            layer.msg("修改成功");
+                        } else {
+                            layer.msg("修改失败");
+                        }
+                    },
+                });
+            },
+        });
+    }
+    function del_column(the, column_id) {
+        var name =$(the).parents('tr').children('td').eq(1).text();
+        layer.open({
+            type:1,
+            area:['400px','200px'],
+            title:'删除栏目',
+            content:'<div class="text-center" style="margin-top:30px"><p>是否确定删除 '+name+' 栏目</p></div>',
+            btn:['确定','取消'],
+            yes:function () {
+                $.ajax({
+                    url:'{% url "article:del_column" %}',
+                    type:"POST",
+                    data:{'column_id':column_id},
+                    success:function (e) {
+                        if(e=='1') {
+                        parent.location.reload();
+                        layer.msg('删除成功');
+                        }else{
+                            layer.msg('删除失败');
+                        }
+                    },
+                })
+            },
+        });
+    }
+    </script>
+{% endblock %}

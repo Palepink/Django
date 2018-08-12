@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script rel="stylesheet" src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script rel="stylesheet" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script rel="stylesheet" src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'fonts/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+{% include 'common/header.html' %}
+{% block content %}
+    <div class="container font-apple">
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-2 list-group " id="list" >
+            <a class="list2" style="margin-top: 20px">文章管理</a>
+            <div class="list1 list-group" style="padding: 20px; font-size: 111px">
+                <a href="{% url 'article:article_column'%}">栏目管理</a>
+                <a href="{% url 'article:article_post' %}">发布文章</a>
+                <a href="{% url 'article:article_list' %}">文章列表</a>
+                <a href="{% url 'article:article_tag' %}">文章标签</a>
+            </div>
+            <a class="list2" style="margin-top: 20px">图片管理</a>
+            <div class="list1 list-group" style="padding: 20px">
+                <a>发布图片</a>
+                <a>图片风格</a>
+            </div>
+            <a class="list2" style="margin-top: 20px">视频管理</a>
+            <div class="list1 list-group" style="padding: 20px">
+                <a>发布视频</a>
+                <a>视频类型</a>
+            </div>
+            <a class="list2" style="margin-top: 20px">关于本站</a>
+            <div class="list1 list-group" style="padding: 20px">
+                <a>帮助中心</a>
+                <a>客服中心</a>
+            </div>
+        </div>
+        <div class="col-md-10">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+    </div>
+    <link href="{% static 'css/home.css' %}">
+{% endblock %}
+{% include 'common/footer.html' %}
+</body>
+</html>

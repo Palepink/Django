@@ -1,0 +1,20 @@
+{% extends 'common/background.html' %}
+{% load staticfiles %}
+{% block body %}
+    <div class="row" style="margin-top: 30px">
+    <div class="col-md-2 " style="border: solid 1pt coral">
+        <div><img height="80px" width="80px" class="bd1" src="{% static 'images/cat00.png' %}"></div>
+        <div class="text-center" style="margin-top: 10px;"><a>{{ user.username }}</a></div>
+        <hr>
+    </div>
+    <div class="col-md-10 bd0">
+        <div class="col-md-2 list-group text-center" style="margin-top: 30px">
+            <a>安康</a>
+            <a>8月5日</a>
+            <a>周日六月廿四</a>
+            <a>天气</a>
+        </div>
+
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="pagination mTitle row" style="font-size: 14px; margin-top: 15px">
+    <span class="step-links">
+        {% if page.has_previous %}
+        <a style="color: black;margin-right: 10px"href="?page={{ page.previous_page_number }}">上一页</a>
+        {% endif %}
+        <a class="current">
+            第 {{ page.number }}页<span style="margin-left: 2em">共{{ page.paginator.num_pages }}页</span>
+        </a>
+        {% if page.has_next %}
+        <a style="color: black;margin-left: 10px" href="?page={{ page.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+</div>

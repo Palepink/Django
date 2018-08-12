@@ -1,0 +1,65 @@
+@charset "utf-8";
+.font-apple{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+#myNav{
+    margin: auto; width:100%; height:40px; background-color: wheat;
+}
+.myNav1 a{
+    color: black; font-size: 14px;
+}
+.myNav2 a{
+    color: black; margin-left: -20px; margin-right: -20px; font-size: 14px;
+}
+.login-item input{
+    width: 200px; height: 40px; border: none; margin-left: 15px;
+}
+.login{
+    border: none;
+}
+.login-item{
+    margin-top: 15px; margin-left: 60px;
+}
+#hidden{
+    display: none;
+}
+#hidden1{
+    display: none; margin-top: 50px;
+}
+#hidden2{
+    display: none;
+}
+#list{
+    height: 100%; color: black;
+}
+.list1 a{
+    color: black; font-size: 14px; margin-top: 5px;
+}
+.list2 {
+    font-size: 18px; margin-left: 20px; margin-bottom:-15px;
+}
+#myTable{
+    width:100%; word-break:keep-all; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.mTitle{
+    font-weight: bold; color: black; font-size: 18px;
+}
+.content1{
+    color: yellow; overflow: hidden; text-overflow: ellipsis; text-align: justify; display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.author{
+    color: black; font-size: 12px;
+}
+.bd0{
+    margin-left: 10px; margin-right: -10px;border: solid 1pt coral
+}
+.bd1{
+    margin-left: 20%;border: 0px bisque;padding: 2px;background-color: wheat;margin-top: 30px;
+}
+.bd2{
+    border: 2px bisque;padding: 90px;background-color: wheat;
+}
+.register input{
+    width: 200px; height: 30px; margin-top:5px; margin-left:15px; border: solid salmon 1px;
+}

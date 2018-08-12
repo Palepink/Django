@@ -1,0 +1,18 @@
+{% extends 'common/index.html' %}
+{% block title %}文章{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3 class="text-center font-weight-bold" style="margin-top: 30px">往事如风，莫失莫忘</h3>
+    <div style="margin-top: 25px;">
+    {% for article in articles %}
+        <div class="list-group row" style="margin-top: 20px">
+            <a class="mTitle" href="{{ article.get_url }}">{{ article.title }}</a>
+            <a style="color:grey" class="content1">{{ article.body|safe |cut:'&emsp;'}}</a>
+            <a class="mTitle author" href="{% url 'article:article'%}">  作者: {{ article.author.username }}</a>
+        </div>
+        <hr>
+    {% endfor %}
+    {% include 'common/paginator.html' %}
+    </div>
+    </div>
+{% endblock %}

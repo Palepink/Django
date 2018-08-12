@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+{% load staticfiles %}
+<div id="myNav" class="nav-fill container-fluid font-apple">
+<!--导航栏-->
+<nav id="myNav" class="navbar nav-fill fixed-top">
+<ul class="nav">
+    <li class="nav-item myNav1">
+      <a class="nav-link" href="{% url 'PalePink:home' %}">首页</a>
+    </li>
+    <li class="nav-item myNav1">
+      <a class="nav-link" href="{% url 'photo:Image' %}">摄影</a>
+    </li>
+    <li class="nav-item myNav1">
+      <a class="nav-link" href="{% url 'article:article' %}">文章</a>
+    </li>
+    <li class="nav-item myNav1">
+      <a class="nav-link" href="{% url 'PalePink:mall' %}">商城</a>
+    </li>
+  </ul>
+    <ul class="nav justify-content-end">
+    <li class="nav-item myNav1">
+        <label for="1"></label>
+        <input style="width: 150px; height: 30px;margin-top: 3px" id="1"> <!-- 搜索框 -->
+    </li>
+    <li class="nav-item myNav1">
+      <a class="nav-link" href="{% url 'article:article_post' %}">创作</a>
+    </li>
+    {% if user.is_authenticated %}
+        <li class="nav-item myNav1" style="margin-left: -10px">
+            <a class="nav-link" href="{% url 'account:background' %}">{{ user.username }}</a>
+        </li>
+        <li class="nav-item myNav1">
+            <a class="nav-link" href="{% url 'account:logout' %}">退出</a>
+        </li>
+    {% else %}
+    <li class="nav-item myNav1">
+      <a class="nav-link" onclick="showLogin()">登录</a>
+    </li>
+    <li class="nav-item myNav2">
+      <a class="nav-link">or</a>
+    </li>
+    <li class="nav-item myNav1">
+      <a class="nav-link" href="{% url 'account:register' %}">注册</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+<!--登录-->
+<div id="hidden" style="margin-top: 100px;">
+    <form action="{% url 'account:login' %}" method="post">
+        {% csrf_token %}
+        <div class="login-item">
+            <label for="username" style="font-size: 25px"><span class="fa fa-user"></span></label>
+            <input id="username" type="text" name="username" value="{{ username }}" placeholder="username">
+        </div>
+        <div class="login-item">
+            <label for="password" style="font-size: 25px"><span class="fa fa-lock"></span></label>
+            <input id="password" type="password" name="password" value="{{ password }}" placeholder="password">
+        </div>
+        <div class="text-center" style="margin-top: 20px">
+            <input class="login" type="submit"  value="登录">
+        </div>
+
+    </form>
+</div>
+</div>
+    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'layui/layer.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>

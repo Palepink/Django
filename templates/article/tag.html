@@ -1,0 +1,108 @@
+{% extends 'common/background.html' %}
+{% block title %}文章标签{% endblock %}
+{% load staticfiles %}
+{% block body %}
+    <div>
+    <div class="list-group list1" style="margin-top: 30px">
+        <h3 class="text-center">文章标签管理</h3>
+        <a>文章标签：{{ article_tags_form.tag }} <input type="button" class="button" value="添加" onclick="add_tag()"></a>
+    </div>
+    <div style="margin-top: 20px">
+        <table class="table table-hover text-center" style="table-layout:fixed">
+            <tr>
+                <td width="20%">序号</td>
+                <td width="40%">标签名称</td>
+                <td width="20%">作者</td>
+                <td width="20%">操作</td>
+            </tr>
+            {% for tag in article_tags %}
+                <tr id="{{ forloop.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td id="myTable">{{ tag.tag }}</td>
+                    <td>{{ tag.author }}</td>
+                    <td >
+                        <a name="edit" href="javascript:" onclick="edit_tag(this,{{ tag.id }})" style="color: black">
+                            <span class="fa fa-pencil"></span>
+                        </a>
+                        <a name="delete" href="javascript:" onclick="del_tag(this,{{ tag.id }})" style="color: black; margin-left: 20px">
+                        <span class="fa fa-trash-o"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+    <script type="text/javascript">
+    function add_tag() {
+        tag = $("#id_tag").val();
+        $.ajax({
+            url:'{% url "article:article_tag" %}',
+            type:'POST',
+            data:{"tag":tag},
+            success: function (e) {
+                if(e=='1'){
+                    layer.msg('标签创建成功');
+                    window.location.reload();
+                }else {
+                    layer.msg(e)
+                }
+            }
+        });
+    }
+    function edit_tag(the,tag_id) {
+        var name=$(the).parents("tr").children("td").eq(1).text();
+        var index=layer.open({
+            type:1,
+            area:['400px','200px'],
+            title:"编辑栏目",
+            content:'<div class="text-center" style="margin-top:2px"><p>请编辑栏目的名称</p>' +
+            '<p><input type="text" id="new_name" value="'+name+'"></p></div>',
+            btn:['确定','取消'],
+            yes:function (index,layro) {
+                new_name = $("#new_name").val();
+                $.ajax({
+                    url:"{% url 'article:edit_tag' %}",
+                    type:"POST",
+                    data:{"tag_id":tag_id,"tag_name":new_name},
+                    success:function (e) {
+                        if (e=='1') {
+                            parent.location.reload();
+                            layer.msg("修改成功");
+                        } else {
+                            layer.msg("修改失败");
+                        }
+                    },
+                });
+            },
+        });
+    }
+    function del_tag(the, tag_id) {
+        var article_tag = $(the).parents('tr').children('td').eq(1).text();
+        layer.open({
+            type:1,
+            skin:'layui-layer-rim',
+            area:['400px', '200px'],
+            title:'删除文章标签',
+            content: '<div class="text-center" style="margin-top:20px"><p>是否确定删除文章标签 '+article_tag+' </p></div>',
+            btn:['确定', '取消'],
+            yes: function () {
+                $.ajax({
+                    url: '{% url 'article:del_tag' %}',
+                    type: 'POST',
+                    data: {'tag_id':tag_id},
+                    success: function (e) {
+                        if(e=='1'){
+                            parent.location.reload();
+                            layer.msg('删除成功');
+                        }else{
+                            layer.msg('删除失败');
+                        }
+                    },
+                })
+            },
+        })
+    }
+    </script>
+    </script>
+{% endblock %}

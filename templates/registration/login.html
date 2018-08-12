@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "common/index.html" %}
+{% load staticfiles %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+    <h1>Login</h1>
+    <p>Input your username and password</p>
+    <form class="form-horizontal" action="{% url 'account:login' %}" method="post">
+        {% csrf_token %}
+        <!--{{ form.as_p}}-->
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}" class="col-md-5 control-label"
+                   style="color: black"><span class="glyphicon glyphicon-user"></span>Username
+            </label>
+            <div class="col-md-6 text-left">{{ form.username }}</div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}" class="col-md-5 control-label"
+                   style="color: black"><span class="glyphicon glyphicon-floppy-save"></span>Password
+            </label>
+            <div class="col-md-6 text-left">{{ form.password }}</div>
+        </div>
+        <input type="submit" class=" btn-success btn-lg" value="Login">
+    </form>
+    <p style="margin-top: 10px">forgot your password?
+        <a href="{% url 'account:password_reset' %}">reset password</a>
+    </p>
+    <p style="margin-top: 10px">if you had not a username,
+        <a href="{% url 'account:register' %}" >register to be a user</a>,please
+    </p>
+    </div>
+{% endblock %}
+</body>
+</html>

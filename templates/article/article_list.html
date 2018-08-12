@@ -1,0 +1,66 @@
+{% extends 'common/background.html' %}
+{% load staticfiles %}
+{% block title %}article list{% endblock %}
+{% block body %}
+    <div style="margin-top: 20px">
+    <table class="table table-hover text-center " style="table-layout:fixed">
+        <tr>
+            <td width="10%">序号</td>
+            <td width="25%">标题</td>
+            <td width="15%">栏目</td>
+            <td width="20%">创建时间</td>
+            <td width="20%">最后修改时间</td>
+            <td width="10%">操作</td>
+        </tr>
+        {% for article in articles %}
+        <tr id="{{ forloop.id }}">
+            <td>{{ forloop.counter }}</td>
+            <td class="text-left" id="myTable"><a href="{{ article.get_absolute_url }}" style="color: black">{{ article.title }}</a></td>
+            <td>{{ article.column }}</td>
+            <td>{{ article.created |date:"F d,y H:i:s" }}</td>
+            <td>{{ article.updated |date:"F d,y H:i:s" }}</td>
+            <td>
+                <a name="edit" href="{% url 'article:edit_article' article.id %}" style="color: black">
+                    <span class="fa fa-pencil"></span>
+                </a>
+                <a name="delete" href="javascript:" onclick="del_article(this,{{ article.id }})" style="color: black">
+                    <span class="fa fa-trash-o" style="margin-left: 20px"></span>
+                </a>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+        <div class="col-md-2 text-right">{% include 'common/paginator.html' %}</div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layui/layer.js'%}"></script>
+    <script type="text/javascript">
+    function del_article(the, article_id) {
+        var name =$(the).parents('tr').children('td').eq(1).text();
+        layer.open({
+            type:1,
+            area:['400px','200px'],
+            title:'删除栏目',
+            content:'<div class="text-center" style="margin-top:30px"><p>是否确定删除 '+name+' 栏目</p></div>',
+            btn:['确定','取消'],
+            yes:function () {
+                $.ajax({
+                    url:'{% url "article:del_article" %}',
+                    type:"POST",
+                    data:{'article_id':article_id},
+                    success:function (e) {
+                        if(e=='1') {
+                        parent.location.reload();
+                        layer.msg('has been deleted.');
+                        }else{
+                            layer.msg('删除失败');
+                        }
+                    },
+                })
+            },
+        });
+    }
+    </script>
+
+{% endblock %}
